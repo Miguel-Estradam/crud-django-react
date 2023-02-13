@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import axios from "axios";
+// Components
+import Header from "./components/Header";
+import BlogForm from "./components/BlogForm";
+import Blogs from "./components/Blogs";
 
 function App() {
+  const [blogs, setBlogs] = useState([]);
+  useEffect(() => {
+    axios.get('/get/')
+    .then((response) => {
+      console.log(response.data)
+      setBlogs(response.data)
+    }).catch(() => {
+      alert('Algo fue mal!')
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <div className="container p-4">
+        <BlogForm blogs={blogs} setBlogs={setBlogs} />
+        <Blogs blogs={blogs} setBlogs={setBlogs}/>
+      </div>
+    </>
   );
 }
 

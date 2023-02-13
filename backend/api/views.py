@@ -32,8 +32,7 @@ def putBlog(request,pk):
         return Response(Serializer.data)
 
 @api_view(['DELETE'])
-def deleteBlog(request,pk):
+def deleteBlog(request, pk):
     blog = Blog.objects.get(id=pk)
     blog.delete()
     return Response('Blog Eliminado')
-
